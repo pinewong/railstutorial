@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :microposts, dependent: :destroy
   attr_accessor :remember_token, :activation_token, :reset_token
   attr_accessor :remember_token, :activation_token
   before_save   :downcase_email
@@ -11,6 +12,12 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+
+  # 实现动态流原型
+  # 完整的实现参见第 14 章
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
 
   # 如果密码重设请求超时了，返回 true
   def password_reset_expired?
@@ -68,6 +75,7 @@ class User < ApplicationRecord
   end
 
   private
+  
     # 把电子邮件地址转换成小写
     def downcase_email
       self.email = email.downcase

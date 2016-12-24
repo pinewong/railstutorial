@@ -24,3 +24,5 @@
 /spring/*.pid
 
 *.env
+# Ignore the uploads files
+/public/uploads
