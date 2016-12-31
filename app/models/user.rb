@@ -25,9 +25,13 @@ class User < ApplicationRecord
   # 实现动态流原型
   # 完整的实现参见第 14 章
   def feed
-    Micropost.where("user_id = ?", id)
+    following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
+    Micropost.where(
+      "user_id IN (#{following_ids}) OR user_id = :user_id", 
+      user_id: id
+    )
   end
-
+  
   # 如果密码重设请求超时了，返回 true
   def password_reset_expired?
     reset_sent_at < 2.hours.ago
