@@ -24,7 +24,7 @@ Rails.application.configure do
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false  # 表示rails不会即时编译asset
-  # config.serve_static_assets = true # 表示unicorn不处理静态文件
+
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
